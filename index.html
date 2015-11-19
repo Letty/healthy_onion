@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<head>
+	<link rel="stylesheet" href="styles/main.css">
+	<script src="d3.min.js"></script>
+	<script src="dis_aster.js"></script>
+	<script src="aster.js"></script>
+</head>
+<body>
+<section>
+	<div class="header">
+		<h1>Disagreement of the Tor Directory Authorities</h1>
+	</div>
+	<div class="aster_plot">
+		<div class="choose_flag">
+			<h6>Choose a Flag:</h6>
+
+			<ul class="flags">
+				<li><button>Authority</button></li>
+				<li><button>BadExit</button></li>
+				<li><button>Exit</button></li>
+				<li><button>Fast</button></li>
+				<li><button>Guard</button></li>
+				<li><button>HSDir</button></li>
+				<li><button>Running</button></li>
+				<li><button>Stable</button></li>
+				<li><button>VDir</button></li>
+				<li><button>Valid</button></li>
+			</ul>
+
+			<div class="play_button">
+				<button id="play">START ANIMATION</button>
+			</div>
+		</div>
+
+		<p></p>
+
+		<div id="aster" class="aster_svg"></div>
+		<div class="aster_info">
+			<ul class="bullets">
+				<li class="bullet">
+					<div class="bullet-icon bullet-icon-1">
+
+					</div>
+					<div class="bullet-content">
+						<h2>Relay Count</h2>
+
+						<p>some space for text</p>
+					</div>
+				</li>
+				<li class="bullet">
+					<div class="bullet-icon bullet-icon-2">
+
+					</div>
+					<div class="bullet-content">
+						<h2>Relay Count</h2>
+
+						<p>some space for text</p>
+					</div>
+				</li>
+				<li class="bullet">
+					<div class="bullet-icon bullet-icon-3">
+
+					</div>
+					<div class="bullet-content">
+						<h2>Relay Count</h2>
+
+						<p>some space for text</p>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+	</div>
+</section>
+
+</body>
+</html>
