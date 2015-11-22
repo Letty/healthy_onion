@@ -10,6 +10,7 @@ window.onload = function () {
 		innerRadius = 0.3 * radius;
 
 	var b = 0;
+	var isPlaying = false;
 	var interval;
 
 	var pie = d3.layout.pie()
@@ -57,9 +58,17 @@ window.onload = function () {
 		.text(dat.count);
 
 	function play() {
-		interval = setInterval(function () {
-			redraw(b++);
-		}, 1000);
+		if(isPlaying){
+			isPlaying = false;
+			d3.select('#play').text('PLAY ANIMATION');
+			clearInterval(interval);
+		}else{
+			isPlaying = true;
+			d3.select('#play').text('STOP ANIMATION');
+			interval = setInterval(function () {
+				redraw(b++);
+			}, 1000);
+		}
 	}
 
 	function redraw(index) {
