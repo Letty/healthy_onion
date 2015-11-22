@@ -15,7 +15,7 @@ window.onload = function () {
 
 	var pie = d3.layout.pie()
 		.sort(null)
-		.value(function (d) {
+		.value(function () {
 			return 1;
 		});
 
@@ -83,4 +83,4 @@ window.onload = function () {
 			.attr("d", arc);
 		txt.text(dat.count);
 	}
-}
+};
