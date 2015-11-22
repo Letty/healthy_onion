@@ -19,8 +19,8 @@ window.onload = function () {
 			return 1;
 		});
 
-	var dat = aster["Fast"][0];
-	d3.select('#play').on('click', play);
+	var currentData = aster["Fast"];
+	var dat = currentData[0];
 
 	var ra = d3.scale.linear()
 		.range([0, 200])
@@ -51,11 +51,54 @@ window.onload = function () {
 		.on('mouseout', function () {
 			txt.text(dat.count);
 		});
+
 	var txt = svg.append("svg:text")
 		.attr("class", "aster-score")
 		.attr("dy", ".35em")
 		.attr("text-anchor", "middle") // text-align: right
 		.text(dat.count);
+
+
+	d3.select('#play').on('click', play);
+	d3.select('#authority').on('click', function () {
+		changeDataset('Authority')
+	});
+	d3.select('#badexit').on('click', function () {
+		changeDataset('BadExit')
+	});
+
+	d3.select('#exit').on('click', function () {
+		changeDataset('Exit')
+	});
+	d3.select('#fast').on('click', function () {
+		changeDataset('Fast')
+	});
+	d3.select('#guard').on('click', function () {
+		changeDataset('Guard')
+	});
+	d3.select('#hsdir').on('click', function () {
+		changeDataset('HSDir')
+	});
+	d3.select('#running').on('click', function () {
+		changeDataset('Running')
+	});
+	d3.select('#stable').on('click', function () {
+		changeDataset('Stable')
+	});
+	d3.select('#v2dir').on('click', function () {
+		changeDataset('V2Dir')
+	});
+	d3.select('#valid').on('click', function () {
+		changeDataset('Valid')
+	});
+
+	function changeDataset(flag) {
+		currentData = aster[flag];
+		redraw(0);
+		b = 0;
+		isPlaying = false;
+		d3.select('#play').text('PLAY ANIMATION');
+	}
 
 	function play() {
 		if(isPlaying){
@@ -72,11 +115,11 @@ window.onload = function () {
 	}
 
 	function redraw(index) {
-		if (index == aster['Fast'].length - 1) {
+		if (index == currentData.length - 1) {
 			clearInterval(interval);
 			b = 0;
 		}
-		var dat = aster["Fast"][index];
+		var dat = currentData[index];
 		var a = d3.selectAll('.solidArc')
 			.data(pie(dat.data));
 		a.transition()
