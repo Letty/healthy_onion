@@ -25,6 +25,13 @@ section {
     border-right: $svg-border;
     border-left: $svg-border;
     border-radius: 0;
+
+    &:active,
+    &:hover,
+    &:focus{
+      background: $tor-purple;
+      color: #fff;
+    }
   }
 
   .flags{
