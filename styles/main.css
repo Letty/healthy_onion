@@ -192,6 +192,49 @@ section {
   section h1 {
     font-size: 200%; }
 
+.accordion-tabs-minimal {
+  line-height: 1.5;
+  padding: 0; }
+  .accordion-tabs-minimal::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .accordion-tabs-minimal li.tab-header-and-content {
+    list-style: none; }
+    @media screen and (min-width: 40em) {
+      .accordion-tabs-minimal li.tab-header-and-content {
+        display: inline; } }
+  .accordion-tabs-minimal a.tab-link {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    color: #333;
+    display: block;
+    padding: 0.75em 1.618em;
+    text-decoration: none; }
+    @media screen and (min-width: 40em) {
+      .accordion-tabs-minimal a.tab-link {
+        display: inline-block;
+        border-top: 0; } }
+    .accordion-tabs-minimal a.tab-link:hover {
+      color: #7a4695; }
+    .accordion-tabs-minimal a.tab-link:focus {
+      outline: none; }
+    .accordion-tabs-minimal a.tab-link.is-active {
+      border-bottom: 0; }
+      @media screen and (min-width: 40em) {
+        .accordion-tabs-minimal a.tab-link.is-active {
+          border: 1px solid #ddd;
+          border-bottom-color: #fff;
+          margin-bottom: -1px; } }
+  .accordion-tabs-minimal .tab-content {
+    display: none;
+    padding: 1.5em 1.618em;
+    width: 100%; }
+    @media screen and (min-width: 40em) {
+      .accordion-tabs-minimal .tab-content {
+        border-top: 1px solid #ddd;
+        float: left; } }
+
 .choose_flag {
   background: #F6F6F6 none repeat scroll 0% 0%;
   border: 1px solid rgba(51, 51, 51, 0.2);
