@@ -2,7 +2,7 @@
  * Created by Letty on 19/11/15.
  */
 
-window.onload = function () {
+$(document).ready(function () {
 	var classes = ['n-7', 'n-6', 'n-5', 'n-4', 'n-3', 'n-2', 'n-1', 'inner'];
 	var width = 500,
 		height = 500,
@@ -104,11 +104,11 @@ window.onload = function () {
 	}
 
 	function play() {
-		if(isPlaying){
+		if (isPlaying) {
 			isPlaying = false;
 			d3.select('#play').text('PLAY ANIMATION');
 			clearInterval(interval);
-		}else{
+		} else {
 			isPlaying = true;
 			d3.select('#play').text('STOP ANIMATION');
 			interval = setInterval(function () {
@@ -129,9 +129,9 @@ window.onload = function () {
 		a.transition()
 			.attr("d", arc);
 		txt.text(dat.count);
-		for(var i = 0; i < dat.data.length; i++){
-			var $rel = d3.select('#relay_'+i);
-			if($rel) $rel.text(dat.data[i]);
+		for (var i = 0; i < dat.data.length; i++) {
+			var $rel = d3.select('#relay_' + i);
+			if ($rel) $rel.text(dat.data[i]);
 		}
 	}
-};
+});
