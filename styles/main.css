@@ -203,6 +203,9 @@ section {
     border-right: 1px solid rgba(51, 51, 51, 0.2);
     border-left: 1px solid rgba(51, 51, 51, 0.2);
     border-radius: 0; }
+    .choose_flag button:active, .choose_flag button:hover, .choose_flag button:focus {
+      background: #7a4695;
+      color: #fff; }
   .choose_flag .flags {
     display: flex;
     flex-wrap: wrap; }
