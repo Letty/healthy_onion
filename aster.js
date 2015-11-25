@@ -9,9 +9,11 @@ window.onload = function () {
 		radius = Math.min(width, height) / 2,
 		innerRadius = 0.3 * radius;
 
-	var b = 0;
+	var index = 0;
+	var lastIndex = index;
 	var isPlaying = false;
 	var interval;
+	var flag = 'Fast';
 
 	var pie = d3.layout.pie()
 		.sort(null)
@@ -19,12 +21,12 @@ window.onload = function () {
 			return 1;
 		});
 
-	var currentData = aster["Fast"];
+	var currentData = aster[flag].data;
 	var dat = currentData[0];
 
 	var ra = d3.scale.linear()
 		.range([0, 200])
-		.domain([0, 6500]);
+		.domain([aster[flag].min, aster[flag].max]);
 
 	var arc = d3.svg.arc()
 		.innerRadius(innerRadius)
@@ -39,7 +41,7 @@ window.onload = function () {
 		.attr("transform", "translate(" + (width / 2 + 50) + "," + (height / 2 + 50) + ")");
 
 	var path = svg.selectAll(".solidArc")
-		.data(pie(dat.data))
+		.data(pie(currentData[0].data))
 		.enter().append("path")
 		.attr("class", function (d, i) {
 			return "solidArc " + classes[i];
@@ -49,7 +51,7 @@ window.onload = function () {
 			txt.text(d.data);
 		})
 		.on('mouseout', function () {
-			txt.text(dat.count);
+			txt.text(currentData[lastIndex].count);
 		});
 
 	var txt = svg.append("svg:text")
@@ -92,10 +94,11 @@ window.onload = function () {
 		changeDataset('Valid')
 	});
 
-	function changeDataset(flag) {
-		currentData = aster[flag];
+	function changeDataset(_flag) {
+		currentData = aster[_flag].data;
+		ra.domain([aster[_flag].min, aster[_flag].max]);
 		redraw(0);
-		b = 0;
+		index = 0;
 		isPlaying = false;
 		d3.select('#play').text('PLAY ANIMATION');
 	}
@@ -109,21 +112,26 @@ window.onload = function () {
 			isPlaying = true;
 			d3.select('#play').text('STOP ANIMATION');
 			interval = setInterval(function () {
-				redraw(b++);
-			}, 1000);
+				redraw(index++);
+			}, 700);
 		}
 	}
 
-	function redraw(index) {
-		if (index == currentData.length - 1) {
+	function redraw(ind) {
+		if (ind == currentData.length - 1) {
 			clearInterval(interval);
-			b = 0;
+			lastIndex = index - 1;
+			index = 0;
 		}
-		var dat = currentData[index];
+		var dat = currentData[ind];
 		var a = d3.selectAll('.solidArc')
 			.data(pie(dat.data));
 		a.transition()
 			.attr("d", arc);
 		txt.text(dat.count);
+		for(var i = 0; i < dat.data.length; i++){
+			var $rel = d3.select('#relay_'+i);
+			if($rel) $rel.text(dat.data[i]);
+		}
 	}
 };
