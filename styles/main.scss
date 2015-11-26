@@ -73,7 +73,7 @@ section {
 
   .tab-content {
     display: none;
-    padding: $base-spacing $gutter;
+    padding: $base-spacing 0em;
     width: 100%;
 
     @include media($tab-mode) {
@@ -85,7 +85,6 @@ section {
 
 
 .choose_flag{
-  background: #F6F6F6 none repeat scroll 0% 0%;
   border: $svg-border;
   padding: 1em;
 
