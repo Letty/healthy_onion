@@ -14,20 +14,18 @@ $(document).ready(function () {
 		height = 500 - margin.top - margin.bottom;
 
 
-	var min = 1e10, max = -1e10;
+	var min = -1e10, max = -1e10;
 
 	var y = d3.scale.ordinal()
 		.rangeRoundBands([0, height], .3)
-		.domain(flags.map(function(d) { return d; }));
+		.domain(flags.map(function (d) {
+			return d;
+		}));
 
 	var x = d3.scale.linear()
 		.rangeRound([0, width]);
 
 	calcMinMaxX();
-
-	var xAxis = d3.svg.axis()
-		.scale(x)
-		.orient("top");
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
@@ -48,18 +46,39 @@ $(document).ready(function () {
 		.data(flags)
 		.enter().append("g")
 		.attr("class", "bar")
-		.attr("transform", function(d) { return "translate(0," + y(d) + ")"; });
+		.attr("transform", function (d) {
+			return "translate(0," + y(d) + ")";
+		});
 
 	var bars = vakken.selectAll("rect")
-		.data(function(d) { return aster[d].data[0].data; })
+		.data(function (d) {
+			return bar_data[d].data[0].data;
+		})
 		.enter().append("g").attr("class", "subbar");
+
 
 	bars.append("rect")
 		.attr("height", y.rangeBand())
-		.attr("x", function(d) { return x(d); })
-		.attr("width", function(d) { return  x(d); });
+		.attr("x", function (d, i, j) {
+			var r = d[2];
+			if((d[1] === 'n-4' || d[1] === 'n-3' || d[1] === 'n-2' || d[1] === 'n-1') && d[0] !== 0){
+				r = d[2] - bar_data[flags[j]].data[0].neg_relays;
+			}
+			return x(r);
+		})
+		.attr("width", function (d, i) {
+			var w_ = d[3] - d[2];
+			if (w_ == 0) {
+				return 0;
+			} else {
+				return (x(d[3])-x(d[2]));
+			}
+		})
+		.attr('class', function (d) {
+			return d[1];
+		});
 
-	vakken.insert("rect",":first-child")
+	vakken.insert("rect", ":first-child")
 		.attr("height", y.rangeBand())
 		.attr("x", "1")
 		.attr("width", width)
@@ -69,8 +88,8 @@ $(document).ready(function () {
 	svg.append("g")
 		.attr("class", "y axis")
 		.append("line")
-		.attr("x1", x(max/2))
-		.attr("x2", x(max/2))
+		.attr("x1", x(0))
+		.attr("x2", x(0))
 		.attr("y2", height);
 
 	// TODO: das hier muss in die styles
@@ -86,11 +105,13 @@ $(document).ready(function () {
 
 	function calcMinMaxX() {
 		flags.forEach(function (d) {
-			if(aster[d].max_relays < min) min = aster[d].max_relays;
-			if(aster[d].max_relays > max) max = aster[d].max_relays;
+			if (bar_data[d].neg_relays > min && bar_data[d].neg_relays !== 0) min = bar_data[d].neg_relays;
+			if (bar_data[d].pos_relays > max && bar_data[d].pos_relays !== 0) max = bar_data[d].pos_relays;
 		});
 
-		x.domain([0, max]);
+		min = -min;
+
+		x.domain([min, max]);
 	}
 
 });
