@@ -263,6 +263,42 @@ section {
   border: 1px solid rgba(51, 51, 51, 0.2); }
   .aster_svg:last-child {
     margin-right: 0; }
+  .aster_svg svg .solidArc:hover {
+    opacity: 1;
+    stroke: black;
+    stroke-width: 2.5px; }
+  .aster_svg svg .solidArc {
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    opacity: 0.85;
+    stroke: grey;
+    stroke-width: 1px; }
+  .aster_svg svg .x.axis path {
+    display: none; }
+  .aster_svg svg .aster-score {
+    line-height: 1;
+    font-weight: bold;
+    font-size: 200%; }
+  .aster_svg svg .inner {
+    fill: #4d9221; }
+  .aster_svg svg .n-1 {
+    fill: #7fbc41; }
+  .aster_svg svg .n-2 {
+    fill: #b8e186; }
+  .aster_svg svg .n-3 {
+    fill: #e6f5d0; }
+  .aster_svg svg .n-4 {
+    fill: #f6e8c3; }
+  .aster_svg svg .n-5 {
+    fill: #dfc27d; }
+  .aster_svg svg .n-6 {
+    fill: #bf812d; }
+  .aster_svg svg .n-7 {
+    fill: #8c510a; }
+  .aster_svg svg .n-8 {
+    fill: #8c510a; }
 
 .aster_info {
   float: left;
@@ -331,48 +367,26 @@ section {
   .bullets img {
     max-width: 100%; }
 
-svg .axis path,
-svg .axis line {
+.barchart svg .axis path,
+.barchart svg .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges; }
-svg .bar {
-  fill: orange; }
-svg .solidArc:hover {
-  opacity: 1;
-  stroke: black;
-  stroke-width: 2.5px; }
-svg .solidArc {
-  -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  opacity: 0.85;
-  stroke: grey;
-  stroke-width: 1px; }
-svg .x.axis path {
-  display: none; }
-svg .aster-score {
-  line-height: 1;
-  font-weight: bold;
-  font-size: 200%; }
-svg .inner {
+.barchart svg .n_p_3 {
   fill: #4d9221; }
-svg .n-1 {
+.barchart svg .n_p_2 {
   fill: #7fbc41; }
-svg .n-2 {
+.barchart svg .n_p_1 {
   fill: #b8e186; }
-svg .n-3 {
+.barchart svg .n {
   fill: #e6f5d0; }
-svg .n-4 {
+.barchart svg .n-1 {
   fill: #f6e8c3; }
-svg .n-5 {
+.barchart svg .n-2 {
   fill: #dfc27d; }
-svg .n-6 {
+.barchart svg .n-3 {
   fill: #bf812d; }
-svg .n-7 {
-  fill: #8c510a; }
-svg .n-8 {
+.barchart svg .n-4 {
   fill: #8c510a; }
 
 /*# sourceMappingURL=main.css.map */
