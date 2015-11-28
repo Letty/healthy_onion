@@ -371,7 +371,10 @@ section {
 .barchart svg .axis line {
   fill: none;
   stroke: #000;
+  stroke-width: 0.6px;
   shape-rendering: crispEdges; }
+.barchart svg .description {
+  font-size: 0.8em; }
 .barchart svg .n_p_3 {
   fill: #4d9221; }
 .barchart svg .n_p_2 {

@@ -4,12 +4,10 @@
 
 
 $(document).ready(function () {
-	var classes = ['n-7', 'n-6', 'n-5', 'n-4', 'n-3', 'n-2', 'n-1', 'inner'];
-	var classes_ = ['n-4', 'n-3', 'n-2', 'n-1', 'n', 'n+1', 'n+2', 'n+3'];
 	var flags = ['Authority', 'BadExit', 'Exit', 'Fast', 'Guard', 'HSDir',
 		'Running', 'Stable', 'V2Dir', 'Valid'];
 
-	var margin = {top: 50, right: 20, bottom: 10, left: 80},
+	var margin = {top: 40, right: 20, bottom: 10, left: 80},
 		width = 800 - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
 
@@ -22,10 +20,18 @@ $(document).ready(function () {
 			return d;
 		}));
 
+	//console.log('rangeband: '+y.rangeBand());
+
 	var x = d3.scale.linear()
 		.rangeRound([0, width]);
 
+	var scale = d3.scale.log().range([0, width]);
+
 	calcMinMaxX();
+
+	//bar_data['Guard'].data[0].data.forEach(function (d) {
+	//	console.log('d: '+d[0]+' scale: '+scale(d[0]));
+	//});
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
@@ -48,6 +54,11 @@ $(document).ready(function () {
 		.attr("class", "bar")
 		.attr("transform", function (d) {
 			return "translate(0," + y(d) + ")";
+		})
+		.on('click', function (d) {
+			// TODO Adding detail view with more detailed graph and information about a flag
+			//console.log(d);
+			//console.log('hello?');
 		});
 
 	var bars = vakken.selectAll("rect")
@@ -61,7 +72,7 @@ $(document).ready(function () {
 		.attr("height", y.rangeBand())
 		.attr("x", function (d, i, j) {
 			var r = d[2];
-			if((d[1] === 'n-4' || d[1] === 'n-3' || d[1] === 'n-2' || d[1] === 'n-1') && d[0] !== 0){
+			if ((d[1] === 'n-4' || d[1] === 'n-3' || d[1] === 'n-2' || d[1] === 'n-1') && d[0] !== 0) {
 				r = d[2] - bar_data[flags[j]].data[0].neg_relays;
 			}
 			return x(r);
@@ -71,11 +82,14 @@ $(document).ready(function () {
 			if (w_ == 0) {
 				return 0;
 			} else {
-				return (x(d[3])-x(d[2]));
+				return (x(d[3]) - x(d[2]));
 			}
 		})
 		.attr('class', function (d) {
 			return d[1];
+		})
+		.on('mouseover', function (d) {
+			//TODO tooltip somewhere
 		});
 
 	vakken.insert("rect", ":first-child")
@@ -84,6 +98,34 @@ $(document).ready(function () {
 		.attr("width", width)
 		.attr("fill-opacity", "0.5")
 		.style("fill", "#F5F5F5");
+
+	var xtxt = svg.append("g")
+		.attr("class", "x axis description")
+		.append('text');
+		xtxt.append('tspan')
+		.attr('x', x(-200))
+		.attr('y', -15)
+		.text('recived less votes')
+		.style("text-anchor", "end");
+		xtxt.append('tspan')
+		.attr('x', x(-200))
+		.attr('y', 0)
+		.text('then required')
+		.style("text-anchor", "end");
+
+	var xtxt2 = svg.append("g")
+		.attr("class", "x axis description")
+		.append('text');
+		xtxt2.append('tspan')
+		.attr('x', x(200))
+		.attr('y', -15)
+		.text('recived all or more')
+		.style("text-anchor", "begin");
+		xtxt2.append('tspan')
+		.attr('x', x(200))
+		.attr('y', 0)
+		.text('required votes')
+		.style("text-anchor", "begin");
 
 	svg.append("g")
 		.attr("class", "y axis")
@@ -111,6 +153,7 @@ $(document).ready(function () {
 
 		min = -min;
 
+		scale.domain([0.1, max]);
 		x.domain([min, max]);
 	}
 

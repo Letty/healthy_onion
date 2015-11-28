@@ -265,7 +265,12 @@ section {
     .axis line {
       fill: none;
       stroke: #000;
+      stroke-width: 0.6px;
       shape-rendering: crispEdges;
+    }
+
+    .description{
+      font-size: 0.8em;
     }
 
     .n_p_3 {
