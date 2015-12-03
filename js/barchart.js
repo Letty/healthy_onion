@@ -5,7 +5,7 @@
 
 $(document).ready(function () {
 	var flags = ['Authority', 'BadExit', 'Exit', 'Fast', 'Guard', 'HSDir',
-		'Running', 'Stable', 'V2Dir', 'Valid'];
+		'Running', 'Stable', 'V2Dir', 'Valid', 'Measured'];
 
 	var margin = {top: 40, right: 20, bottom: 10, left: 80},
 		width = 800 - margin.left - margin.right,
