@@ -222,6 +222,9 @@ section {
   stroke: #000;
   stroke-width: 0.6px;
   shape-rendering: crispEdges; }
+.barchart svg .flag_ {
+  fill: #F5F5F5;
+  fill-opacity: 0.5; }
 .barchart svg .description {
   font-size: 0.8em; }
 .barchart svg .n_p_3 {
