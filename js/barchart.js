@@ -13,18 +13,22 @@ $(document).ready(function () {
 
 	var min = -1e10, max = -1e10;
 
+	var isPlaying = false;
+	var interval;
+	var end = bar_data.Authority.data.length;
+
 	var y = d3.scale.ordinal()
 		.rangeRoundBands([0, height], .3)
 		.domain(flags.map(function (d) {
 			return d;
 		}));
 
-	//console.log('rangeband: '+y.rangeBand());
-
 	var x = d3.scale.linear()
 		.rangeRound([0, width]);
 
 	var scale = d3.scale.log().range([0, width]);
+
+	var index = 0;
 
 	calcMinMaxX();
 
@@ -47,10 +51,22 @@ $(document).ready(function () {
 		.attr("class", "y axis")
 		.call(yAxis);
 
-	var vakken = svg.selectAll(".question")
+	svg.selectAll(".flags")
 		.data(flags)
 		.enter().append("g")
-		.attr("class", "bar")
+		.attr("class", "flag_")
+		.attr("transform", function (d) {
+			return "translate(0," + y(d) + ")";
+		})
+		.append("rect")
+		.attr("height", y.rangeBand())
+		.attr("x", "1")
+		.attr("width", width);
+
+	var vakken = svg.selectAll(".flags")
+		.data(flags)
+		.enter().append("g")
+		.attr("class", "flag")
 		.attr("transform", function (d) {
 			return "translate(0," + y(d) + ")";
 		})
@@ -60,19 +76,19 @@ $(document).ready(function () {
 			//console.log('hello?');
 		});
 
-	var bars = vakken.selectAll("rect")
+	var bars = vakken.selectAll(".vote")
 		.data(function (d) {
-			return bar_data[d].data[0].data;
+			return bar_data[d].data[index].data;
 		})
 		.enter().append("g").attr("class", "subbar");
 
-
 	bars.append("rect")
+		.attr('class', 'vote')
 		.attr("height", y.rangeBand())
 		.attr("x", function (d, i, j) {
 			var r = d[2];
 			if ((d[1] === 'n-4' || d[1] === 'n-3' || d[1] === 'n-2' || d[1] === 'n-1') && d[0] !== 0) {
-				r = d[2] - bar_data[flags[j]].data[0].neg_relays;
+				r = d[2] - bar_data[flags[j]].data[index].neg_relays;
 			}
 			return x(r);
 		})
@@ -91,22 +107,15 @@ $(document).ready(function () {
 			//TODO tooltip somewhere
 		});
 
-	vakken.insert("rect", ":first-child")
-		.attr("height", y.rangeBand())
-		.attr("x", "1")
-		.attr("width", width)
-		.attr("fill-opacity", "0.5")
-		.style("fill", "#F5F5F5");
-
 	var xtxt = svg.append("g")
 		.attr("class", "x axis description")
 		.append('text');
-		xtxt.append('tspan')
+	xtxt.append('tspan')
 		.attr('x', x(-200))
 		.attr('y', -15)
-		.text('recived less votes')
+		.text('received less votes')
 		.style("text-anchor", "end");
-		xtxt.append('tspan')
+	xtxt.append('tspan')
 		.attr('x', x(-200))
 		.attr('y', 0)
 		.text('then required')
@@ -115,12 +124,12 @@ $(document).ready(function () {
 	var xtxt2 = svg.append("g")
 		.attr("class", "x axis description")
 		.append('text');
-		xtxt2.append('tspan')
+	xtxt2.append('tspan')
 		.attr('x', x(200))
 		.attr('y', -15)
-		.text('recived all or more')
+		.text('received all or more')
 		.style("text-anchor", "begin");
-		xtxt2.append('tspan')
+	xtxt2.append('tspan')
 		.attr('x', x(200))
 		.attr('y', 0)
 		.text('required votes')
@@ -144,7 +153,8 @@ $(document).ready(function () {
 		.style("stroke", "#000")
 		.style("shape-rendering", "crispEdges");
 
-	d3.select('.date').text(bar_data['Authority'].data[0].date);
+	d3.select('.date').text(bar_data['Authority'].data[index].date);
+	d3.select('#play').on('click', play);
 
 	function calcMinMaxX() {
 		flags.forEach(function (d) {
@@ -156,6 +166,53 @@ $(document).ready(function () {
 
 		scale.domain([0.1, max]);
 		x.domain([min, max]);
+	}
+
+	function play() {
+		if (isPlaying) {
+			isPlaying = false;
+			d3.select('#play').text('PLAY ANIMATION');
+			clearInterval(interval);
+		} else {
+			isPlaying = true;
+			d3.select('#play').text('STOP ANIMATION');
+			interval = setInterval(function () {
+				redraw(index++);
+			}, 700);
+		}
+	}
+
+	function redraw(ind) {
+		if (ind == end - 1) {
+			clearInterval(interval);
+			index = 0;
+		}
+		var a = vakken.selectAll('rect')
+			.data(function (d) {
+				return bar_data[d].data[ind].data;
+			});
+
+		a.enter().append("g")
+			.attr("class", "subbar");
+		a.transition()
+			.attr("x", function (d, i, j) {
+				var r = d[2];
+				if ((d[1] === 'n-4' || d[1] === 'n-3' || d[1] === 'n-2' || d[1] === 'n-1') && d[0] !== 0) {
+					r = d[2] - bar_data[flags[j]].data[ind].neg_relays;
+				}
+				return x(r);
+			})
+			.attr("width", function (d) {
+				var w_ = d[3] - d[2];
+				if (w_ == 0) {
+					return 0;
+				} else {
+					return (x(d[3]) - x(d[2]));
+				}
+			});
+
+		d3.select('.date').text(bar_data['Authority'].data[ind].date);
+
 	}
 
 });
