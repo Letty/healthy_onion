@@ -145,6 +145,8 @@ $(document).ready(function () {
 		.style("stroke", "#000")
 		.style("shape-rendering", "crispEdges");
 
+	d3.select('#date').text(bar_data['Authority'].data[0].date);
+
 	function calcMinMaxX() {
 		flags.forEach(function (d) {
 			if (bar_data[d].neg_relays > min && bar_data[d].neg_relays !== 0) min = bar_data[d].neg_relays;

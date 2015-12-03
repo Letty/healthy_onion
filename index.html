@@ -18,82 +18,13 @@
 		<h1>Disagreement of the Tor Directory Authorities</h1>
 	</div>
 
-	<ul class="accordion-tabs-minimal">
-		<li class="tab-header-and-content">
-			<a href="#" class="tab-link is-active">Aster Plot Visualization</a>
-			<div class="tab-content">
-				<div class="aster_plot">
-					<div class="choose_flag">
-						<h6>Choose a Flag:</h6>
+	<div>
+		<p id="date"></p>
+	</div>
 
-						<ul class="flags">
-							<li><button id="authority">Authority</button></li>
-							<li><button id="badexit">BadExit</button></li>
-							<li><button id="exit">Exit</button></li>
-							<li><button id="fast">Fast</button></li>
-							<li><button id="guard">Guard</button></li>
-							<li><button id="hsdir">HSDir</button></li>
-							<li><button id="running">Running</button></li>
-							<li><button id="stable">Stable</button></li>
-							<li><button id="v2dir">VDir</button></li>
-							<li><button id="valid">Valid</button></li>
-						</ul>
-
-						<div class="play_button">
-							<button id="play">START ANIMATION</button>
-						</div>
-					</div>
-
-					<p></p>
-
-					<div id="aster" class="aster_svg"></div>
-					<div class="aster_info">
-						<ul class="bullets">
-							<li class="bullet">
-								<div class="bullet-icon bullet-icon-1">
-
-								</div>
-								<div class="bullet-content">
-									<h2 id="relay_7">Relay Count</h2>
-
-									<p>some space for text</p>
-								</div>
-							</li>
-							<li class="bullet">
-								<div class="bullet-icon bullet-icon-2">
-
-								</div>
-								<div class="bullet-content">
-									<h2 id="relay_6">Relay Count</h2>
-
-									<p>some space for text</p>
-								</div>
-							</li>
-							<li class="bullet">
-								<div class="bullet-icon bullet-icon-3">
-
-								</div>
-								<div class="bullet-content">
-									<h2 id="relay_0">Relay Count</h2>
-
-									<p>some space for text</p>
-								</div>
-							</li>
-						</ul>
-
-					</div>
-				</div>
-			</div>
-		</li>
-		<li class="tab-header-and-content">
-			<a href="#" class="tab-link">Bar Chart Visualization</a>
-			<div class="tab-content">
-				<div class="barchart">
-					<div id="bar"></div>
-				</div>
-			</div>
-		</li>
-	</ul>
+	<div class="barchart">
+		<div id="bar"></div>
+	</div>
 
 </section>
 
