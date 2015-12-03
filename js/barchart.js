@@ -8,9 +8,8 @@ $(document).ready(function () {
 		'Running', 'Stable', 'V2Dir', 'Valid', 'Measured'];
 
 	var margin = {top: 40, right: 20, bottom: 10, left: 80},
-		width = 800 - margin.left - margin.right,
+		width = $("#bar")[0].clientWidth - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
-
 
 	var min = -1e10, max = -1e10;
 
@@ -77,7 +76,7 @@ $(document).ready(function () {
 			}
 			return x(r);
 		})
-		.attr("width", function (d, i) {
+		.attr("width", function (d) {
 			var w_ = d[3] - d[2];
 			if (w_ == 0) {
 				return 0;
@@ -145,7 +144,7 @@ $(document).ready(function () {
 		.style("stroke", "#000")
 		.style("shape-rendering", "crispEdges");
 
-	d3.select('#date').text(bar_data['Authority'].data[0].date);
+	d3.select('.date').text(bar_data['Authority'].data[0].date);
 
 	function calcMinMaxX() {
 		flags.forEach(function (d) {
