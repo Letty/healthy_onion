@@ -190,58 +190,81 @@ section {
     content: "";
     display: table; }
   section h1 {
-    font-size: 200%; }
-
-.date_container {
-  display: flex;
-  flex-direction: row-reverse; }
-
-.choose_flag {
-  border: 1px solid rgba(51, 51, 51, 0.2);
-  padding: 1em; }
-  .choose_flag button {
-    background: none;
-    color: #7a4695;
-    padding: 0.25em 0.5em;
-    border-right: 1px solid rgba(51, 51, 51, 0.2);
-    border-left: 1px solid rgba(51, 51, 51, 0.2);
-    border-radius: 0; }
-    .choose_flag button:active, .choose_flag button:hover, .choose_flag button:focus {
-      background: #7a4695;
-      color: #fff; }
-  .choose_flag .flags {
-    display: flex;
-    flex-wrap: wrap; }
-  .choose_flag .play_button {
-    display: flex;
-    flex-direction: row-reverse; }
-
-.barchart svg .axis path,
-.barchart svg .axis line {
-  fill: none;
-  stroke: #000;
-  stroke-width: 0.6px;
-  shape-rendering: crispEdges; }
-.barchart svg .flag_ {
-  fill: #F5F5F5;
-  fill-opacity: 0.5; }
-.barchart svg .description {
-  font-size: 0.8em; }
-.barchart svg .n_p_3 {
-  fill: #4d9221; }
-.barchart svg .n_p_2 {
-  fill: #7fbc41; }
-.barchart svg .n_p_1 {
-  fill: #b8e186; }
-.barchart svg .n {
-  fill: #e6f5d0; }
-.barchart svg .n-1 {
-  fill: #f6e8c3; }
-.barchart svg .n-2 {
-  fill: #dfc27d; }
-.barchart svg .n-3 {
-  fill: #bf812d; }
-.barchart svg .n-4 {
-  fill: #8c510a; }
+    font-size: 3em; }
+  section .line-behind-text {
+    border-bottom: 1px solid #999;
+    text-align: center;
+    margin-bottom: 3.5em; }
+    section .line-behind-text h6 {
+      background: #FFF none repeat scroll 0% 0%;
+      color: #999;
+      display: inline-block;
+      font-size: 1em;
+      font-weight: bold;
+      padding: 0px 10px;
+      position: relative;
+      text-transform: uppercase;
+      top: 34px;
+      margin-bottom: 1.5em; }
+  section .viz {
+    margin-top: 50px;
+    background: rgba(153, 153, 153, 0.1); }
+    section .viz .date_container {
+      display: flex;
+      flex-direction: row-reverse; }
+    section .viz .choose_flag {
+      border: 1px solid rgba(51, 51, 51, 0.2);
+      padding: 1em; }
+      section .viz .choose_flag button {
+        background: none;
+        color: #7a4695;
+        padding: 0.25em 0.5em;
+        border-right: 1px solid rgba(51, 51, 51, 0.2);
+        border-left: 1px solid rgba(51, 51, 51, 0.2);
+        border-radius: 0; }
+        section .viz .choose_flag button:active, section .viz .choose_flag button:hover, section .viz .choose_flag button:focus {
+          background: #7a4695;
+          color: #fff; }
+      section .viz .choose_flag .flags {
+        display: flex;
+        flex-wrap: wrap; }
+      section .viz .choose_flag .play_button {
+        display: flex;
+        flex-direction: row-reverse; }
+    section .viz .barchart svg .axis path,
+    section .viz .barchart svg .axis line {
+      fill: none;
+      stroke: #000;
+      stroke-width: 0.6px;
+      shape-rendering: crispEdges; }
+    section .viz .barchart svg .flag_ {
+      fill: white; }
+    section .viz .barchart svg .description {
+      font-size: 0.8em; }
+    section .viz .barchart svg .n_p_3 {
+      fill: #4d9221; }
+    section .viz .barchart svg .n_p_2 {
+      fill: #7fbc41; }
+    section .viz .barchart svg .n_p_1 {
+      fill: #b8e186; }
+    section .viz .barchart svg .n {
+      fill: #e6f5d0; }
+    section .viz .barchart svg .n-1 {
+      fill: #f6e8c3; }
+    section .viz .barchart svg .n-2 {
+      fill: #dfc27d; }
+    section .viz .barchart svg .n-3 {
+      fill: #bf812d; }
+    section .viz .barchart svg .n-4 {
+      fill: #8c510a; }
+  section .flag_description dl {
+    margin: 1em; }
+  section .flag_description dd {
+    color: rgba(51, 51, 51, 0.7);
+    line-height: 1.5em; }
+  section .footer {
+    margin-top: -3em;
+    color: #999;
+    text-align: center; }
 
 /*# sourceMappingURL=main.css.map */

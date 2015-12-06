@@ -16,16 +16,139 @@
 		<h1>Disagreement of the Tor Directory Authorities</h1>
 	</div>
 
-	<div class="play_button">
-		<button id="play">START ANIMATION</button>
+	<div class="pre_description">
+		<p>
+			There are a few thousand relays in the Tor network that clients can choose from to build circuits. All these
+			relays need to register at a small number of central directory authorities to announce themselves and their
+			capabilities in the network. The directory authorities exchange their views of the relays in the network,
+			and the capabilities of each, once per hour and then publish a new network status consensus that clients use
+			to build circuits.
+		</p>
+
+		<p>
+			In theory, the directory authorities would unanimously agree that a given relay does or does not have a
+			given capability, but in practice, they don't. In most cases it's sufficient if a majority of directory
+			authorities agrees on a capability, though thin majorities make the network less robust than it could be
+			against single directory failures or opinion changes.
+		</p>
+
+		<p>
+			The following graph shows how much the directory authorities disagree about certain capabilities. If all the
+			directory authorities agree on a capability, this is displayed in dark green. If all of them agree that a
+			relay does not have a capability, which may also be a perfectly valid case, this is shown in bright white.
+			But everything in between, displayed in brown or yellow, can be considered unhealthy for the network and may
+			indicate problems in the underlying algorithms.
+		</p>
 	</div>
 
-	<div class="date_container">
-		<p class="date"></p>
+	<div class="line-behind-text">
+		<h6 class="er_toc_tag">VISUALIZATION</h6>
 	</div>
 
-	<div class="barchart">
-		<div id="bar"></div>
+	<div class="viz">
+		<div class="play_button">
+			<button id="play">START ANIMATION</button>
+		</div>
+
+		<div class="date_container">
+			<p class="date"></p>
+		</div>
+
+		<div class="barchart">
+			<div id="bar"></div>
+		</div>
+	</div>
+
+	<div class="line-behind-text">
+		<h6 class="er_toc_tag">FLAG DESCRIPTION</h6>
+	</div>
+
+	<div class="flag_description">
+
+		<dl>
+			<dt>Authority</dt>
+			<dd>Relays that are considered directory authorities by the (other) directory authorities</dd>
+		</dl>
+		<dl>
+			<dt>BadExit</dt>
+			<dd>Relays that are believed to be useless as exit nodes, because their ISPs censor them, because they are
+				behind restrictive proxies, or for some similar reason (not all directory authorities vote on this flag)
+			</dd>
+		</dl>
+		<dl>
+			<dt>Exit</dt>
+			<dd>Relays that permit exiting to at least two ports out of 80, 443, and 6667 and which should be selected
+				by clients for the exit position of circuits, rather than in the guard or middle positions
+			</dd>
+		</dl>
+		<dl>
+			<dt>Fast</dt>
+			<dd>Relays that are suitable for high-bandwidth circuits</dd>
+		</dl>
+		<dl>
+			<dt>Guard</dt>
+			<dd>Relays that are suitable for use as entry guards</dd>
+		</dl>
+		<dl>
+			<dt>HSDir</dt>
+			<dd>Relays that are considered part of the distributed hash table which stores onion service descriptors
+			</dd>
+		</dl>
+		<dl>
+			<dt>Named</dt>
+			<dd>Relays that have their nickname bound to a fingerprint by the directory authorities and that clients
+				can refer to by nickname rather than by fingerprint (not all directory authorities vote on this flag,
+				and as of
+				August 2014, all of them have stopped doing so)
+			</dd>
+		</dl>
+		<dl>
+			<dt>Stable</dt>
+			<dd>Relays that are suitable for long-lived circuits</dd>
+		</dl>
+		<dl>
+			<dt>Running</dt>
+			<dd>Relays that recently passed the reachability test performed by directory authorities and that are
+				currently usable
+			</dd>
+		</dl>
+		<dl>
+			<dt>Unnamed</dt>
+			<dd>Relays using a nickname that has already been registered with the directory authorities by another
+				relay (not all directory authorities vote on this flag, and as of August 2014, all of them have stopped
+				doing
+				so)
+			</dd>
+		</dl>
+		<dl>
+			<dt>Valid</dt>
+			<dd>Relays that have been validated for use in all circuit positions</dd>
+		</dl>
+		<dl>
+			<dt>V2Dir</dt>
+			<dd>Relays that implement the version 2 directory protocol or higher and that act as directory servers</dd>
+		</dl>
+		<dl>
+			<dt>Measured</dt>
+			<dd>Relays that have had their bandwidth measured by the directory authorities and that clients will
+				prefer over unmeasured relays when selecting relays for their circuits (note that Measured is
+				technically not a
+				relay flag, though it's a related concept)
+			</dd>
+		</dl>
+
+		<dl>
+			<dt>Listed</dt>
+			<dd>Relays that are listed in the vote of at least one directory authority</dd>
+		</dl>
+	</div>
+
+	<div class="line-behind-text">
+		<h6 class="er_toc_tag">LAST CHANGE</h6>
+	</div>
+
+	<div class="footer">
+		6th December 2015 10:30 PM
 	</div>
 
 </section>

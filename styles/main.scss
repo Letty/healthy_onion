@@ -8,100 +8,151 @@ section {
   @include outer-container;
   border-radius: 0.5em;
 
-  h1{
-    font-size: 200%;
-  }
-}
-.date_container{
-  display: flex;
-  flex-direction: row-reverse;
-  .date{
-
-  }
-}
-
-.choose_flag{
-  border: $svg-border;
-  padding: 1em;
-
-  button {
-    background: none;
-    color: $tor-purple;
-    padding: 0.25em 0.5em;
-    border-right: $svg-border;
-    border-left: $svg-border;
-    border-radius: 0;
-
-    &:active,
-    &:hover,
-    &:focus{
-      background: $tor-purple;
-      color: #fff;
-    }
+  h1 {
+	font-size: 3em;
   }
 
-  .flags{
-    display: flex;
-    flex-wrap: wrap;
+  .line-behind-text {
+	border-bottom: 1px solid $medium-gray;
+	text-align: center;
+	margin-bottom: 3.5em;
+
+	h6 {
+	  background: #FFF none repeat scroll 0% 0%;
+	  color: $medium-gray;
+	  display: inline-block;
+	  font-size: 1em;
+	  font-weight: bold;
+	  padding: 0px 10px;
+	  position: relative;
+	  text-transform: uppercase;
+	  top: 34px;
+	  margin-bottom: 1.5em;
+
+	}
   }
 
-  .play_button{
-    display: flex;
-    flex-direction: row-reverse;
-  }
-}
-
-
-
-.barchart{
-  svg{
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: #000;
-      stroke-width: 0.6px;
-      shape-rendering: crispEdges;
-    }
-
-    .flag_{
-      fill:#F5F5F5;
-      fill-opacity: 0.5;
-    }
-
-    .description{
-      font-size: 0.8em;
-    }
-
-    .n_p_3 {
-    fill: #4d9221;
+  .pre_description {
+	//font-size: 0.9em;
   }
 
-    .n_p_2 {
-    fill: #7fbc41;
+  .viz {
+	  margin-top: 50px;
+	  background: transparentize($medium-gray, 0.9);;
+
+	.date_container {
+	  display: flex;
+	  flex-direction: row-reverse;
+	  .date {
+
+	  }
+	}
+
+	.choose_flag {
+	  border: $svg-border;
+	  padding: 1em;
+
+	  button {
+		background: none;
+		color: $tor-purple;
+		padding: 0.25em 0.5em;
+		border-right: $svg-border;
+		border-left: $svg-border;
+		border-radius: 0;
+
+		&:active,
+		&:hover,
+		&:focus {
+		  background: $tor-purple;
+		  color: #fff;
+		}
+	  }
+
+	  .flags {
+		display: flex;
+		flex-wrap: wrap;
+	  }
+
+	  .play_button {
+		display: flex;
+		flex-direction: row-reverse;
+	  }
+	}
+
+	.barchart {
+	  svg {
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: #000;
+		  stroke-width: 0.6px;
+		  shape-rendering: crispEdges;
+		}
+
+		.flag_ {
+		  fill: white;
+		  //fill-opacity: 0.5;
+		}
+
+		.description {
+		  font-size: 0.8em;
+		}
+
+		.n_p_3 {
+		  fill: #4d9221;
+		}
+
+		.n_p_2 {
+		  fill: #7fbc41;
+		}
+
+		.n_p_1 {
+		  fill: #b8e186;
+		}
+
+		.n {
+		  fill: #e6f5d0;
+		}
+
+		.n-1 {
+		  fill: #f6e8c3;
+		}
+
+		.n-2 {
+		  fill: #dfc27d;
+		}
+
+		.n-3 {
+		  fill: #bf812d;
+		}
+
+		.n-4 {
+		  fill: #8c510a;
+		}
+	  }
+	}
   }
 
-    .n_p_1 {
-    fill: #b8e186;
+  .flag_description {
+	//@include display(flex);
+	//@include flex-wrap(wrap);
+	//@include justify-content(space-between);
+
+	dl {
+	  //@include flex-basis(20em);
+	  //@include flex-grow(1);
+	  margin: 1em;
+	}
+
+	dd {
+	  color: transparentize($base-font-color, 0.3);
+	  line-height: 1.5em;
+	}
   }
 
-    .n {
-      fill: #e6f5d0;
-    }
-
-    .n-1 {
-      fill: #f6e8c3;
-    }
-
-    .n-2 {
-      fill: #dfc27d;
-    }
-
-    .n-3 {
-      fill: #bf812d;
-    }
-
-    .n-4 {
-      fill: #8c510a;
-    }
-  }
+	.footer{
+		margin-top: -3em;
+		color: $medium-gray;
+		text-align: center;
+	}
 }
