@@ -37,10 +37,11 @@ section {
   }
 
   .viz {
-	margin-top: 50px;
+	margin-top: 10px;
 	background: transparentize($medium-gray, 0.9);;
 
 	.date_container {
+	  margin-right: 20px;
 	  display: flex;
 	  flex-direction: row-reverse;
 	  .date {
@@ -97,6 +98,41 @@ section {
 
 		.description {
 		  font-size: 0.8em;
+		}
+
+		//colors:
+		// grau(#909090), #8c510a','#ab7a38', '#c9a563', '#e5d190', '#ffffbf', '#cce5a2', '#99cc86', '#63b26a',dklgrün (#1a9850)
+		// Gruppen: v0(grau), ...,req(gelb),...., max(dkl grün)
+
+		.v0 {
+		  fill: #a6a6a6;
+		}
+		.r-4 {
+		  fill: #8c510a;
+		}
+		.r-3 {
+		  fill: #ab7a38;
+		}
+		.r-2 {
+		  fill: #c9a563;
+		}
+		.r-1 {
+		  fill: #e5d190;
+		}
+		.req {
+		  fill: #ffffbf;
+		}
+		.m-3 {
+		  fill: #cce5a2;
+		}
+		.m-2 {
+		  fill: #99cc86;
+		}
+		.m-1 {
+		  fill: #63b26a;
+		}
+		.max {
+		  fill: #1a9850;
 		}
 
 		.n_p_3 {

@@ -207,9 +207,10 @@ section {
       top: 34px;
       margin-bottom: 1.5em; }
   section .viz {
-    margin-top: 50px;
+    margin-top: 10px;
     background: rgba(153, 153, 153, 0.1); }
     section .viz .date_container {
+      margin-right: 20px;
       display: flex;
       flex-direction: row-reverse; }
       section .viz .date_container .date {
@@ -244,6 +245,26 @@ section {
       fill: white; }
     section .viz .barchart svg .description {
       font-size: 0.8em; }
+    section .viz .barchart svg .v0 {
+      fill: #a6a6a6; }
+    section .viz .barchart svg .r-4 {
+      fill: #8c510a; }
+    section .viz .barchart svg .r-3 {
+      fill: #ab7a38; }
+    section .viz .barchart svg .r-2 {
+      fill: #c9a563; }
+    section .viz .barchart svg .r-1 {
+      fill: #e5d190; }
+    section .viz .barchart svg .req {
+      fill: #ffffbf; }
+    section .viz .barchart svg .m-3 {
+      fill: #cce5a2; }
+    section .viz .barchart svg .m-2 {
+      fill: #99cc86; }
+    section .viz .barchart svg .m-1 {
+      fill: #63b26a; }
+    section .viz .barchart svg .max {
+      fill: #1a9850; }
     section .viz .barchart svg .n_p_3 {
       fill: #4d9221; }
     section .viz .barchart svg .n_p_2 {
