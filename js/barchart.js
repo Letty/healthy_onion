@@ -5,9 +5,9 @@
 
 $(document).ready(function () {
 	var flags = ['Authority', 'BadExit', 'Exit', 'Fast', 'Guard', 'HSDir',
-		'Running', 'Stable', 'V2Dir', 'Valid', 'Measured'];
+		'Running', 'Stable', 'V2Dir', 'Valid', 'Listed', 'Measured'];
 
-	var margin = {top: 40, right: 20, bottom: 10, left: 80},
+	var margin = {top: 40, right: 20, bottom: 10, left: 90},
 		width = $("#bar")[0].clientWidth - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
 
@@ -15,7 +15,7 @@ $(document).ready(function () {
 
 	var isPlaying = false;
 	var interval;
-	var end = bar_data.Authority.data.length;
+	var end = dis_july.Authority.data.length;
 
 	var y = d3.scale.ordinal()
 		.rangeRoundBands([0, height], .3)
@@ -31,10 +31,6 @@ $(document).ready(function () {
 	var index = 0;
 
 	calcMinMaxX();
-
-	//bar_data['Guard'].data[0].data.forEach(function (d) {
-	//	console.log('d: '+d[0]+' scale: '+scale(d[0]));
-	//});
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
@@ -72,13 +68,11 @@ $(document).ready(function () {
 		})
 		.on('click', function (d) {
 			// TODO Adding detail view with more detailed graph and information about a flag
-			//console.log(d);
-			//console.log('hello?');
 		});
 
 	var bars = vakken.selectAll(".vote")
 		.data(function (d) {
-			return bar_data[d].data[index].data;
+			return dis_july[d].data[index].data;
 		})
 		.enter().append("g").attr("class", "subbar");
 
@@ -86,19 +80,10 @@ $(document).ready(function () {
 		.attr('class', 'vote')
 		.attr("height", y.rangeBand())
 		.attr("x", function (d, i, j) {
-			var r = d[2];
-			if ((d[1] === 'n-4' || d[1] === 'n-3' || d[1] === 'n-2' || d[1] === 'n-1') && d[0] !== 0) {
-				r = d[2] - bar_data[flags[j]].data[index].neg_relays;
-			}
-			return x(r);
+			return getX1(d, 0, j);
 		})
-		.attr("width", function (d) {
-			var w_ = d[3] - d[2];
-			if (w_ == 0) {
-				return 0;
-			} else {
-				return (x(d[3]) - x(d[2]));
-			}
+		.attr("width", function (d, i, j) {
+			return getWidth(d, 0, j);
 		})
 		.attr('class', function (d) {
 			return d[1];
@@ -153,19 +138,19 @@ $(document).ready(function () {
 		.style("stroke", "#000")
 		.style("shape-rendering", "crispEdges");
 
-	d3.select('.date').text(bar_data['Authority'].data[index].date);
+	d3.select('.date').text(formatDate(dis_july['Authority'].data[index].date));
 	d3.select('#play').on('click', play);
 
 	function calcMinMaxX() {
 		flags.forEach(function (d) {
-			if (bar_data[d].neg_relays > min && bar_data[d].neg_relays !== 0) min = bar_data[d].neg_relays;
-			if (bar_data[d].pos_relays > max && bar_data[d].pos_relays !== 0) max = bar_data[d].pos_relays;
+			if (dis_july[d].neg_relays > min && dis_july[d].neg_relays !== 0) min = dis_july[d].neg_relays;
+			if (dis_july[d].pos_relays > max && dis_july[d].pos_relays !== 0) max = dis_july[d].pos_relays;
 		});
 
 		min = -min;
 
 		scale.domain([0.1, max]);
-		x.domain([min, max]);
+		x.domain([min, max]).nice;
 	}
 
 	function play() {
@@ -189,30 +174,74 @@ $(document).ready(function () {
 		}
 		var a = vakken.selectAll('rect')
 			.data(function (d) {
-				return bar_data[d].data[ind].data;
+				return dis_july[d].data[ind].data;
 			});
 
 		a.enter().append("g")
 			.attr("class", "subbar");
 		a.transition()
-			.attr("x", function (d, i, j) {
-				var r = d[2];
-				if ((d[1] === 'n-4' || d[1] === 'n-3' || d[1] === 'n-2' || d[1] === 'n-1') && d[0] !== 0) {
-					r = d[2] - bar_data[flags[j]].data[ind].neg_relays;
-				}
-				return x(r);
+			.attr('class', function (d) {
+				return d[1];
 			})
-			.attr("width", function (d) {
-				var w_ = d[3] - d[2];
-				if (w_ == 0) {
-					return 0;
-				} else {
-					return (x(d[3]) - x(d[2]));
-				}
+			.attr("x", function (d, i, j) {
+				return getX1(d, ind, j);
+			})
+			.attr("width", function (d, i, j) {
+				return getWidth(d, ind, j);
 			});
 
-		d3.select('.date').text(bar_data['Authority'].data[ind].date);
+		d3.select('.date').text(formatDate(dis_july['Authority'].data[ind].date));
 
 	}
 
+	function formatDate(t) {
+		var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+			'September', 'October', 'November', 'December'];
+		var d = t.split(' ');
+		var d_ = d[0].split('-');
+		return day(parseInt(d_[2])) + ' ' + month[parseInt(d_[1]) - 1] + ' ' + d_[0];
+	}
+
+	function day(d) {
+		var suf = d;
+		switch (d) {
+			case 1:
+				suf += 'st';
+				break;
+			case 2:
+				suf += 'nd';
+				break;
+			case 3:
+				suf += 'rd';
+				break;
+			case 31:
+				suf += 'st';
+				break;
+			default:
+				suf += 'th';
+				break;
+		}
+		return suf;
+	}
+
+	function getWidth(data, index, k) {
+		if (data[0] == 0) {
+			return 0;
+		} else {
+			var r = x(data[3]) - x(data[2]);
+			if ((data[1] === 'v0' || data[1] === 'r-4' || data[1] === 'r-3' || data[1] === 'r-2' || data[1] === 'r-1') && data[0] !== 0) {
+				r = ((x(data[3] - dis_july[flags[k]].data[index].neg_relays)) - x(data[2] - dis_july[flags[k]].data[index].neg_relays));
+			}
+			return r;
+		}
+	}
+
+	function getX1(data, index, k) {
+		var r = data[2];
+		if ((data[1] === 'v0' || data[1] === 'r-4' || data[1] === 'r-3' || data[1] === 'r-2' || data[1] === 'r-1') && data[0] !== 0) {
+			r = data[2] - dis_july[flags[k]].data[index].neg_relays;
+		}
+		return x(r);
+	}
 });
+
