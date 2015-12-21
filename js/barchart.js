@@ -103,7 +103,7 @@ $(document).ready(function () {
 	xtxt.append('tspan')
 		.attr('x', x(-200))
 		.attr('y', 0)
-		.text('then required')
+		.text('than required')
 		.style("text-anchor", "end");
 
 	var xtxt2 = svg.append("g")
