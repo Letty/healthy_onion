@@ -31,6 +31,7 @@ $(document).ready(function () {
 	var index = 0;
 
 	calcMinMaxX();
+	//console.log(dis_july.BadExit.data);
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
@@ -59,10 +60,12 @@ $(document).ready(function () {
 		.attr("x", "1")
 		.attr("width", width);
 
-	var vakken = svg.selectAll(".flags")
+	var flag_group = svg.selectAll(".flag")
 		.data(flags)
 		.enter().append("g")
-		.attr("class", "flag")
+		.attr("class", function (d) {
+			return "flag " + d;
+		})
 		.attr("transform", function (d) {
 			return "translate(0," + y(d) + ")";
 		})
@@ -70,23 +73,20 @@ $(document).ready(function () {
 			// TODO Adding detail view with more detailed graph and information about a flag
 		});
 
-	var bars = vakken.selectAll(".vote")
+	flag_group.selectAll(".subbar")
 		.data(function (d) {
 			return dis_july[d].data[index].data;
 		})
-		.enter().append("g").attr("class", "subbar");
-
-	bars.append("rect")
-		.attr('class', 'vote')
+		.enter().append("rect")
 		.attr("height", y.rangeBand())
 		.attr("x", function (d, i, j) {
-			return getX1(d, 0, j);
+			return getX1(d, flags[j]);
 		})
 		.attr("width", function (d, i, j) {
-			return getWidth(d, 0, j);
+			return getWidth(d, flags[j]);
 		})
 		.attr('class', function (d) {
-			return d[1];
+			return 'subbar ' + d[1];
 		})
 		.on('mouseover', function (d) {
 			//TODO tooltip somewhere
@@ -150,7 +150,7 @@ $(document).ready(function () {
 		min = -min;
 
 		scale.domain([0.1, max]);
-		x.domain([min, max]).nice;
+		x.domain([min, max]).nice();
 	}
 
 	function play() {
@@ -162,35 +162,52 @@ $(document).ready(function () {
 			isPlaying = true;
 			d3.select('#play').text('STOP ANIMATION');
 			interval = setInterval(function () {
-				redraw(index++);
+				index++;
+				if (index == end - 1) {
+					clearInterval(interval);
+					index = 0;
+				} else {
+					redraw();
+				}
 			}, 700);
 		}
 	}
 
-	function redraw(ind) {
-		if (ind == end - 1) {
-			clearInterval(interval);
-			index = 0;
-		}
-		var a = vakken.selectAll('rect')
-			.data(function (d) {
-				return dis_july[d].data[ind].data;
-			});
+	function redraw() {
+		flags.forEach(function (f) {
+			var data = dis_july[f].data[index].data;
+			var a = d3.selectAll('g.flag.' + f)
+				.data(function () {
+					return dis_july[f].data[index].data;
+				});
 
-		a.enter().append("g")
-			.attr("class", "subbar");
-		a.transition()
-			.attr('class', function (d) {
-				return d[1];
-			})
-			.attr("x", function (d, i, j) {
-				return getX1(d, ind, j);
-			})
-			.attr("width", function (d, i, j) {
-				return getWidth(d, ind, j);
-			});
+			data.forEach(function (d) {
+				var b = a.selectAll('.' + d[1]);
 
-		d3.select('.date').text(formatDate(dis_july['Authority'].data[ind].date));
+				if (b[0].length == 0) {
+					b = a.append('rect')
+						.attr('class', 'subbar ' + d[1])
+						.attr("height", y.rangeBand())
+						.attr("x", function () {
+							return getX1(d, f);
+						})
+						.attr("width", function () {
+							return getWidth(d, f);
+						});
+				}
+
+				b.transition()
+					.attr("x", function () {
+						return getX1(d, f);
+					})
+					.attr("width", function () {
+						return getWidth(d, f);
+					});
+			});
+			a.exit().remove();
+		});
+
+		d3.select('.date').text(formatDate(dis_july['Authority'].data[index].date));
 
 	}
 
@@ -224,22 +241,22 @@ $(document).ready(function () {
 		return suf;
 	}
 
-	function getWidth(data, index, k) {
+	function getWidth(data, k) {
 		if (data[0] == 0) {
 			return 0;
 		} else {
 			var r = x(data[3]) - x(data[2]);
 			if ((data[1] === 'v0' || data[1] === 'r-4' || data[1] === 'r-3' || data[1] === 'r-2' || data[1] === 'r-1') && data[0] !== 0) {
-				r = ((x(data[3] - dis_july[flags[k]].data[index].neg_relays)) - x(data[2] - dis_july[flags[k]].data[index].neg_relays));
+				r = ((x(data[3] - dis_july[k].data[index].neg_relays)) - x(data[2] - dis_july[k].data[index].neg_relays));
 			}
 			return r;
 		}
 	}
 
-	function getX1(data, index, k) {
+	function getX1(data, k) {
 		var r = data[2];
 		if ((data[1] === 'v0' || data[1] === 'r-4' || data[1] === 'r-3' || data[1] === 'r-2' || data[1] === 'r-1') && data[0] !== 0) {
-			r = data[2] - dis_july[flags[k]].data[index].neg_relays;
+			r = data[2] - dis_july[k].data[index].neg_relays;
 		}
 		return x(r);
 	}
